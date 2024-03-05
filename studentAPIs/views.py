@@ -7,6 +7,10 @@ from . import models
 from . import serializers
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
+from django.conf import settings
+import os
+
 
 class StudentView(APIView):
     authentication_classes=[JWTAuthentication]
@@ -47,7 +51,7 @@ class StudentView(APIView):
         serializer=serializers.StudentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"status":"success","message":"Student Data Added Successfully"},status=status.HTTP_200_OK)
+            return Response({"status":"success","message":"Student Data Added Successfully","data":serializer.data},status=status.HTTP_200_OK)
         else:
             return Response({"status":"error","message":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
     
@@ -71,4 +75,3 @@ class StudentView(APIView):
         except ObjectDoesNotExist:
             return Response({"status":"error","message":"Student Not Found"},status=status.HTTP_404_NOT_FOUND)
         
-

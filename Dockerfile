@@ -11,6 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /code
 COPY . .
-
+EXPOSE 8000
 # Command to run the uvicorn server
-CMD ["python","manage.py","runserver", "--host","0.0.0.0","--port","8000"]
+CMD ["python","manage.py","runserver"]
+

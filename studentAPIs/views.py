@@ -10,7 +10,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view
 from django.conf import settings
 import os
-
+import requests
 
 class StudentView(APIView):
     authentication_classes=[JWTAuthentication]
@@ -75,3 +75,11 @@ class StudentView(APIView):
         except ObjectDoesNotExist:
             return Response({"status":"error","message":"Student Not Found"},status=status.HTTP_404_NOT_FOUND)
         
+
+
+class ExternalAPICall(APIView):
+    def get(self, request):
+        url = 'https://jsonplaceholder.typicode.com/posts'
+        response = requests.get(url)
+        data = response.json()
+        return Response(data)

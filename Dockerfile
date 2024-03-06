@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Command to run the uvicorn server
-CMD ["python","manage.py","runserver", "0.0.0.0"]
+CMD ["python","manage.py","runserver"]

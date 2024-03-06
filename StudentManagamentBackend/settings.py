@@ -87,7 +87,7 @@ DATABASES = {
         'NAME': 'StudentManagement',
         'USER':'postgres',
         'PASSWORD':'postgres',
-        'HOST':'localhost'
+        'HOST':'10.60.122.47'
     }
 }
 

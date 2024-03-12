@@ -11,7 +11,7 @@ from rest_framework.decorators import api_view
 from django.conf import settings
 import os
 import requests
-
+# import time
 class StudentView(APIView):
     authentication_classes=[JWTAuthentication]
     permission_classes=[IsAuthenticated]
@@ -38,7 +38,6 @@ class StudentView(APIView):
             start = (page - 1)*count
             end = page*count
             end = end if end <= len(data) else len(data)
-            
             return Response({"status":"success","page":page,"count":count,"total_data":total,
                             "data":data[start:end]},status=status.HTTP_200_OK)
         
@@ -51,6 +50,7 @@ class StudentView(APIView):
         serializer=serializers.StudentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            # time.sleep(3)
             return Response({"status":"success","message":"Student Data Added Successfully","data":serializer.data},status=status.HTTP_200_OK)
         else:
             return Response({"status":"error","message":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
@@ -61,6 +61,7 @@ class StudentView(APIView):
             serializer=serializers.StudentSerializer(student,data=request.data,partial=True)
             if serializer.is_valid():
                 serializer.save()
+                # time.sleep(3)
                 return Response({"status":"success","data":serializer.data},status=status.HTTP_200_OK)
             else:
                 return Response({"status":"error","data":serializer.errors},status=status.HTTP_400_BAD_REQUEST)
@@ -71,6 +72,7 @@ class StudentView(APIView):
         try:
             student=models.StudentInfo.objects.filter(id=id)
             student.delete()
+            # time.sleep(3)
             return Response({"status":"success","message":"Student Info Deleted Successfully"})
         except ObjectDoesNotExist:
             return Response({"status":"error","message":"Student Not Found"},status=status.HTTP_404_NOT_FOUND)
